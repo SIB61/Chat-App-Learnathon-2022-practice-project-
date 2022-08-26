@@ -28,8 +28,8 @@
 </table>
 -->
 
-<div
-  class="h-full p-4 lg:p-8 relative flex justify-between flex-col items-center w-screen"
+<!-- <div
+  class="h-full p-4 lg:p-8 relative flex justify-between flex-col items-center"
 >
   <div class="overflow-x-auto w-full shadow-lg">
     <table class="table w-full">
@@ -43,13 +43,21 @@
         </tr>
       </thead>
       <tbody class="table-row-group">
-        <tr class="table-row hover"  *ngFor="let user of users">
-
-
-          <td  *ngIf="user.id !== userId" class="font-bold text-md">{{ user.userName }}</td>
-          <td  *ngIf="user.id !== userId"  >{{ user.email }}</td>
-          <td  *ngIf="user.id !== userId" >{{ user.birthDate | date }}</td>
-          <td  *ngIf="user.id !== userId" ><button class="btn btn-primary"  routerLink="/home/chatbox/{{user.id}}/{{user.userName}}"  [state]="{username:user.userName}" >chat</button></td>
+        <tr class="table-row hover" *ngFor="let user of users">
+          <td *ngIf="user.id !== userId" class="font-bold text-md">
+            {{ user.userName }}
+          </td>
+          <td *ngIf="user.id !== userId">{{ user.email }}</td>
+          <td *ngIf="user.id !== userId">{{ user.birthDate | date }}</td>
+          <td *ngIf="user.id !== userId">
+            <button
+              class="btn btn-primary"
+              routerLink="/home/chatbox/{{ user.id }}/{{ user.userName }}"
+              [state]="{ username: user.userName }"
+            >
+              chat
+            </button>
+          </td>
         </tr>
       </tbody>
       <tfoot class="table-footer-group">
@@ -59,4 +67,28 @@
       </tfoot>
     </table>
   </div>
-</div>
+</div> -->
+<mat-selection-list
+  multiple="false"
+  #frnds
+  cdk-scrollable
+  (selectionChange)="changeFriend(frnds.selectedOptions.selected[0].value)"
+>
+  <mat-list-option *ngFor="let user of users" class="text-white" [value]="user">
+    <div mat-list-avatar>
+      <mat-icon mat-list-icon class="accent">person</mat-icon>
+    </div>
+    <div mat-line>
+      <span class="text-xl text-white">
+        {{ user.userName }}
+      </span>
+    </div>
+    <div mat-line>
+      <span class="text-gray-400">
+        {{ user.email }}
+      </span>
+    </div>
+
+    <mat-divider></mat-divider>
+  </mat-list-option>
+</mat-selection-list>

@@ -3482,19 +3482,19 @@
     ]
   },
   "packageFolders": {
-    "/home/fahim/.nuget/packages/": {}
+    "/home/sabit/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/fahim/Documents/Git/api/api.csproj",
+      "projectUniqueName": "/home/sabit/WebProjects/learnathon-final-task/api/api.csproj",
       "projectName": "api",
-      "projectPath": "/home/fahim/Documents/Git/api/api.csproj",
-      "packagesPath": "/home/fahim/.nuget/packages/",
-      "outputPath": "/home/fahim/Documents/Git/api/obj/",
+      "projectPath": "/home/sabit/WebProjects/learnathon-final-task/api/api.csproj",
+      "packagesPath": "/home/sabit/.nuget/packages/",
+      "outputPath": "/home/sabit/WebProjects/learnathon-final-task/api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/fahim/.nuget/NuGet/NuGet.Config"
+        "/home/sabit/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -3581,7 +3581,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.302/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
       }
     }
   }

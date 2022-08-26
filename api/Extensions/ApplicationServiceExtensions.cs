@@ -38,8 +38,8 @@ namespace api.Extensions
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddHttpContextAccessor();
-            var multiplexer =  ConnectionMultiplexer.Connect("127.0.0.1:6379");
-            IServer server = multiplexer.GetServer("127.0.0.1",6379);
+            var multiplexer =  ConnectionMultiplexer.Connect("redis-10168.c305.ap-south-1-1.ec2.cloud.redislabs.com:10168,password=9n5q8fOxgKfZHc3DuW47TA7ZhCud6rDU,ConnectTimeout=10000");
+            IServer server = multiplexer.GetServer("redis-10168.c305.ap-south-1-1.ec2.cloud.redislabs.com:10168", "Students-free-db");
             services.AddSingleton<IConnectionMultiplexer>(multiplexer);
             services.AddSingleton<IServer>(server);
             services.AddSingleton<IUriService>( o => {

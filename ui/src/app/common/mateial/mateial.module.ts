@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -14,6 +14,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 const matModules: any[] = [
   MatFormFieldModule,
   MatPaginatorModule,
@@ -22,6 +24,8 @@ const matModules: any[] = [
   MatButtonModule,
   MatDialogModule,
   MatInputModule,
+  MatListModule,
+  MatSidenavModule,
   MatCardModule,
   MatButtonToggleModule,
   MatProgressBarModule,
@@ -30,6 +34,7 @@ const matModules: any[] = [
   MatIconModule,
   MatSnackBarModule,
   MatTabsModule,
+  MatRippleModule,
 ];
 
 @NgModule({

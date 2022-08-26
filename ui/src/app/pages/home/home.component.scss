@@ -1,0 +1,16 @@
+mat-toolbar {
+  width: 30%;
+  /* From https://css.glass */
+}
+mat-drawer-content {
+  height: 100vh;
+}
+.scrolling {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

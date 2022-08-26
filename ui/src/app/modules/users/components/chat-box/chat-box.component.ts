@@ -1,96 +1,95 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { message } from '@common/models/message';
 import { sendmessage } from '@common/models/sendmessage';
 import { MessageService } from '@common/services/message/message.service';
 import { sendMessage } from '@microsoft/signalr/dist/esm/Utils';
+import { SharedFriendService } from '@modules/users/services/shared_friend.service';
 import { distinctUntilChanged, take, Subject } from 'rxjs';
-
 
 @Component({
   selector: 'app-chat-box',
   templateUrl: './chat-box.component.html',
-  styleUrls: ['./chat-box.component.scss']
+  styleUrls: ['./chat-box.component.scss'],
 })
 export class ChatBoxComponent implements OnInit, OnDestroy {
+  recipientId: string = "T";
+  recieverUsername: string;
+  messages: message[];
+  sendmessage: sendmessage;
+  form: FormGroup;
+  scrolltop: number;
+  isOpen: boolean;
+  isLarge: boolean;
 
-  recieverId : string;
-  recieverUsername : string;
-  message: message[];
-  sendmessage : sendmessage;
-  sendNewSMS : FormGroup;
-
- 
-
-  scrolltop:number;
-  @ViewChild('commentEl') comment : ElementRef ;  
-
-  Ini()
-  {
-    this.sendNewSMS = this.fb.group({
-      content: [''],
-      recipientId : [this.recieverId],
-    })
-  }
-  
-
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private router: Router,
-    private activeRoute: ActivatedRoute, public messageService: MessageService
-   ) {}
+    private activeRoute: ActivatedRoute,
+    public messageService: MessageService,
+    public sharedService: SharedFriendService
+  ) {}
 
   ngOnDestroy(): void {
-    console.log("Stop HubConnection");
+    console.log('Stop HubConnection');
     this.messageService.stopHubConnection();
   }
 
-
   ngOnInit(): void {
-    const id = (this.activeRoute.snapshot.paramMap.get('id'));
-    if(id != null){
-      this.recieverId = id;
-    }
+    this.form = this.fb.group({
+      content: [''],
+    });
 
+    this.sharedService.$reciever.subscribe({
+      next: (value: any) => {
+        this.messageService.stopHubConnection();
+        this.recipientId = value.id;
+        this.form.get('recipientId')?.setValue(value.id);
+        this.recieverUsername = value.username;
+        this.messageService.createHubConnection(value.id);
+        this.messageService.loadMessage(this.recipientId).subscribe({
+          next: (res) => {
+            this.messageService.messageThreadSource.next(res);
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
+      },
+    });
 
-    const username = (this.activeRoute.snapshot.paramMap.get("username"));
-    if(username != null){
-      this.recieverUsername = username;
-    }
-    this.Ini();
-
-    this.messageService.loadMessage(this.recieverId).subscribe(res => {
-      this.messageService.messageThreadSource.next(res)
-    }, error =>{
-      console.log(error);
-    })
-   
-
-
-    this.messageService.createHubConnection(this.recieverId);
-
-   
-
-
-    this.messageService.messageThread$.pipe(distinctUntilChanged())
-      .subscribe(res =>{
-        this.scrolltop = this.comment.nativeElement.scrollHeight;
+    this.messageService.messageThread$
+      .pipe(distinctUntilChanged())
+      .subscribe((res) => {
+        this.messages = res;
       });
+
+    this.sharedService.$isOpen.subscribe({
+      next: (val) => {
+        this.isOpen = val;
+      },
+    });
+
+    this.sharedService.$isLarge.subscribe({
+      next: (val) => {
+        this.isLarge = val;
+      },
+    });
   }
 
-  
-  
+  async sendSMS() {
+    const content = this.form.get('content')?.value;
 
-  sendSMS()
-  {
-     
-     this.messageService.sendMessage(this.sendNewSMS.value).then(
-      ()=>{
-        this.sendNewSMS.reset();
-        this.Ini();
-        this.scrolltop = this.comment.nativeElement.scrollHeight;
-      }
-     )
+    const value = { content: content, recipientId: this.recipientId };
+    const message = await this.messageService.sendMessage(value);
+    this.form.reset();
+    this.messages = [message, ...this.messages];
   }
-  
 }

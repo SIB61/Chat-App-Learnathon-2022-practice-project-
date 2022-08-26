@@ -1,8 +1,33 @@
-<!-- <div class="z-40 w-full mat-elevation-z8 top-0 left-0 sticky">
-    <app-app-bar></app-app-bar>
-  </div> -->
-<div class="btn-group">
-  <button class="btn btn-primary" routerLink="allUsers">AllUser</button>
-  <button class="btn btn-primary" routerLink="onlineUsers">OnlineUser</button>
-</div>
-<router-outlet></router-outlet>
+<mat-drawer-container class="w-100w">
+  <mat-drawer mode="side" [opened]="isOpened">
+    <div
+      class="w-30w h-screen primary flex flex-col justify-start"
+      [style.width]="isLarge ? '30vw' : '80vw'"
+    >
+      <mat-toolbar
+        color="primary"
+        class="mat-elevation-z8 fixed w-30w z-50"
+        [style.width]="isLarge ? '30vw' : '80vw'"
+      >
+        <mat-toolbar-row>
+          <span
+            class="accent h-full aspect-square flex justify-center items-center mr-4 text-black"
+          >
+            {{ myUsername?.charAt(0)?.toUpperCase() }}
+          </span>
+          {{ myUsername }}
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="h-full mt-16 scrolling">
+        <app-online-users></app-online-users>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="h-full flex flex-col justify-start">
+      <div class="w-full h-full">
+        <app-chat-box></app-chat-box>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

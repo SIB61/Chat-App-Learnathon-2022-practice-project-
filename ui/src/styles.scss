@@ -1,16 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
-@use "@angular/material" as mat;
-@include mat.core();
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-$primary: #000000;
-:root {
-  --primary: #3f51b5;
-  --primary-dark: #303f9f;
-  --secondary: #80cbc4;
-  --error: #b00020;
-}
+@import "./my-theme.scss";
 html,
 body {
   overflow-y: auto;
@@ -30,4 +21,24 @@ body {
   z-index: 0;
   transform: skewY(20deg);
   transform-origin: top right;
+}
+
+.primary {
+  background-color: var(--primary);
+}
+.accent {
+  background-color: var(--accent);
+}
+
+.hero {
+  display: block;
+  box-sizing: border-box;
+  height: 50vh;
+  width: 100vw;
+  background-color: #dc3d4b;
+  clip-path: ellipse(50% 100% at 50% 0%);
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
 }

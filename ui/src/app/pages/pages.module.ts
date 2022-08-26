@@ -8,10 +8,19 @@ import { HomeComponent } from './home/home.component';
 import { AppBarComponent } from '@core/components/app-bar/app-bar.component';
 import { AppBarModule } from '@core/components/app-bar/app-bar.module';
 import { Router } from '@angular/router';
+import { UsersModule } from '@modules/users/users.module';
+import { SharedFriendService } from '@modules/users/services/shared_friend.service';
 @NgModule({
   declarations: [AccountComponent, WelcomeComponent, HomeComponent],
-  imports: [CommonModule, MateialModule, PagesRoutingModule, AppBarModule],
+  imports: [
+    CommonModule,
+    MateialModule,
+    PagesRoutingModule,
+    AppBarModule,
+    UsersModule,
+  ],
   exports: [],
+  providers: [SharedFriendService],
 })
 export class PagesModule {
   constructor(private router: Router) {}

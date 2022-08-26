@@ -1,141 +1,91 @@
-<div class="card glass lg:w-96">
-  <div class="card-body">
-    <form [formGroup]="regFormGroup" (ngSubmit)="register(regFormGroup.value)">
-      <!-- username field -->
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text">Username</span>
-        </label>
+<mat-card class="w-full mat-elevation-z8">
+  <mat-card-header>
+    <mat-card-title>Sign up </mat-card-title>
+    <mat-card-subtitle>at messenger</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form
+      [formGroup]="regFormGroup"
+      (submit)="register(regFormGroup.value)"
+      class="flex flex-col justify-center"
+    >
+      <mat-form-field>
         <input
-          type="text"
-          formControlName="username"
+          matInput
           placeholder="username"
-          id="username"
-          class="input input-bordered w-full"
-          autocomplete="off"
+          formControlName="username"
+          autocomplete="false"
         />
-        <label
-          class="label"
-          *ngIf="
-            regFormGroup.get('username')?.touched &&
-            regFormGroup.get('username')?.invalid
-          "
-        >
-          <span class="label-text text-error flex flex-col">
-            {{ getErrorMsg(regFormGroup.get("username")) }}
-          </span>
-        </label>
-      </div>
-
-      <!-- email field -->
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text">Email</span>
-        </label>
+        <mat-error *ngIf="invalidUserName">username allready exists</mat-error>
+        <mat-error *ngIf="regFormGroup.get('username')?.invalid">{{
+          getErrorMsg(regFormGroup.get("username"))
+        }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
         <input
-          type="text"
+          matInput
           placeholder="email"
-          class="input input-bordered w-full"
-          autocomplete="off"
           formControlName="email"
+          autocomplete="false"
         />
-        <label
-          class="label"
-          *ngIf="
-            regFormGroup.get('email')?.touched &&
-            regFormGroup.get('email')?.invalid
-          "
-        >
-          <span class="label-text text-error flex flex-col">
-            {{ getErrorMsg(regFormGroup.get("email")) }}
-          </span>
-        </label>
-      </div>
-
-      <!-- date of birth field -->
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text">Date of Birth</span>
-        </label>
+        <mat-error *ngIf="invalidEmail">email allready exists</mat-error>
+        <mat-error *ngIf="regFormGroup.get('email')?.invalid">{{
+          getErrorMsg(regFormGroup.get("email"))
+        }}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
         <input
-          type="date"
-          placeholder="date of birth"
-          class="input input-bordered w-full"
-          autocomplete="off"
+          matInput
+          placeholder="birth date"
+          [matDatepicker]="picker"
           formControlName="birthDate"
         />
-        <label
-          class="label"
-          *ngIf="
-            regFormGroup.get('birthDate')?.touched &&
-            regFormGroup.get('birthDate')?.invalid
-          "
-        >
-          <span class="label-text text-error flex flex-col">
-            {{ getErrorMsg(regFormGroup.get("birthDate")) }}
-          </span>
-        </label>
-      </div>
-
-      <!-- password field -->
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text">Password</span>
-        </label>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-error *ngIf="regFormGroup.get('birthDate')?.invalid">{{
+          getErrorMsg(regFormGroup.get("birthDate"))
+        }}</mat-error>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
         <input
-          type="text"
+          matInput
           placeholder="password"
-          class="input input-bordered w-full"
-          autocomplete="off"
+          [type]="hidden ? 'password' : 'text'"
           formControlName="password"
+          autocomplete="false"
         />
-        <label
-          class="label"
-          *ngIf="
-            regFormGroup.get('password')?.touched &&
-            regFormGroup.get('password')?.invalid
-          "
-        >
-          <span class="label-text text-error flex flex-col">
-            {{ getErrorMsg(regFormGroup.get("password")) }}
-          </span>
-        </label>
-      </div>
+        <mat-error *ngIf="regFormGroup.get('password')?.invalid">{{
+          getErrorMsg(regFormGroup.get("password"))
+        }}</mat-error>
+      </mat-form-field>
 
-      <!--repeated password field -->
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text">Confirm Password</span>
-        </label>
+      <mat-form-field>
         <input
-          type="text"
-          placeholder="password"
-          class="input input-bordered w-full"
+          matInput
+          placeholder="repeat password"
+          [type]="rHidden ? 'password' : 'text'"
           formControlName="repeatedPassword"
-          [autocomplete]="false"
+          autocomplete="false"
         />
-        <label
-          class="label"
-          *ngIf="
-            regFormGroup.get('repeatedPassword')?.touched &&
-            regFormGroup.get('repeatedPassword')?.invalid
-          "
-        >
-          <span class="label-text text-error flex flex-col">
-            {{ getErrorMsg(regFormGroup.get("repeatedPassword")) }}
-          </span>
-        </label>
-      </div>
-      <div class="form-control mt-6">
-        <button class="btn btn-primary" [disabled]="regFormGroup.invalid">
-          Sign Up
-        </button>
-      </div>
+        <mat-error *ngIf="regFormGroup.get('repeatedPassword')?.invalid">{{
+          getErrorMsg(regFormGroup.get("repeatedPassword"))
+        }}</mat-error>
+      </mat-form-field>
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="regFormGroup.invalid"
+        type="submit"
+      >
+        Sign Up
+      </button>
     </form>
-    <div class="divider">OR</div>
-    <p class="w-full text-center">
+  </mat-card-content>
+  <mat-card-footer class="bg-blue-50">
+    <div class="flex justify-center items-center w-full flex-row py-1">
       allready have an account?
-      <a routerLink="../login" class="link">sign in</a>
-    </p>
-  </div>
-</div>
+      <button mat-button routerLink="/account/login">sign in</button>
+    </div>
+  </mat-card-footer>
+</mat-card>

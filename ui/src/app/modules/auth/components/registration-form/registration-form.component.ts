@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -13,6 +13,7 @@ import {
   strongPassword,
   validAge,
 } from '@common/validators/custom.validator';
+import { Subscription } from 'rxjs';
 import { fade, slideR } from 'src/app/common/animations/enterleave.animation';
 import { RegistrationModel } from 'src/app/common/models/registrationModel';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
@@ -28,29 +29,31 @@ import { RegistrationService } from '../../services/registration.service';
     { provide: AbsRegistratoinService, useClass: RegistrationService },
   ],
 })
-export class RegistrationFormComponent implements OnInit {
+export class RegistrationFormComponent implements OnInit, OnDestroy {
   constructor(
-    private router: Router,
     private authService: AbsRegistratoinService,
     private snackbar: MatSnackBar,
     private loaderService: LoaderService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
+  subscription: Subscription;
   hidden: boolean;
   rHidden: boolean;
   invalidUserName: boolean;
   invalidEmail: boolean;
   showProgres: boolean;
-  regFormGroup: FormGroup;
-
+  regFormGroup: FormGroup = this.formBuilder.group({
+    username: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    birthDate: ['', [Validators.required, validAge]],
+    password: ['', [Validators.required, strongPassword]],
+    repeatedPassword: ['', [Validators.required, matchPassword]],
+  });
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
+  }
   ngOnInit(): void {
-    this.regFormGroup = this.formBuilder.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      birthDate: ['', [Validators.required, validAge]],
-      password: ['', [Validators.required, strongPassword]],
-      repeatedPassword: ['', [Validators.required, matchPassword]],
-    });
     this.hidden = true;
     this.rHidden = true;
     this.invalidUserName = false;
@@ -87,36 +90,46 @@ export class RegistrationFormComponent implements OnInit {
     return '*error';
   }
 
-  goToLogin() {
-    this.router.navigateByUrl('account/login');
-  }
-
   register(content: RegistrationModel) {
     this.loaderService.setLoading(true);
-    console.warn(' from register method');
+    console.warn('from register method');
     this.showProgres = true;
     this.invalidEmail = false;
     this.invalidUserName = false;
-    this.authService.register(content).subscribe({
-      next: (value) => {
-        console.warn(value);
-        if (value) {
+    this.subscription = this.authService
+      .register({
+        username: content.username,
+        email: content.email,
+        password: content.password,
+        birthDate: content.birthDate,
+      })
+      .subscribe({
+        next: (value) => {
+          console.warn(value);
+          if (value) {
+            this.showProgres = false;
+            this.loaderService.setLoading(false);
+            this.snackbar.open('Registered Successfully', 'ok');
+            localStorage.setItem('access_token', value.token);
+            localStorage.setItem('refresh_token', value.refreshToken);
+            localStorage.setItem('username', value.username);
+            this.router.navigateByUrl('/home');
+          }
+        },
+        error: (error: HttpErrorResponse) => {
           this.showProgres = false;
+          if (error.error == 'username') {
+            this.invalidUserName = true;
+            this.snackbar.open('username allready exists', 'ok');
+          } else if (error.error == 'email') {
+            this.invalidEmail = true;
+            this.snackbar.open('email allready exists', 'ok');
+          }
+          console.warn(error);
           this.loaderService.setLoading(false);
-          this.snackbar.open('Registered Successfully', 'ok');
-        }
-      },
-      error: (error: HttpErrorResponse) => {
-        this.showProgres = false;
-        if (error.error == 'username') {
-          this.invalidUserName = true;
-        } else if (error.error == 'email') {
-          this.invalidEmail = true;
-        }
-        this.loaderService.setLoading(false);
-        this.snackbar.open('registration failed', 'ok');
-      },
-    });
+          this.snackbar.open('registration failed', 'ok');
+        },
+      });
   }
   toggleVisibility(t: number) {
     if (t == 1) this.hidden = !this.hidden;

@@ -12,7 +12,7 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     redirectTo:
-      localStorage.getItem('access_token') == null ? 'welcome' : 'home',
+      localStorage.getItem('access_token') == null ? 'account' : 'home',
   },
 
   {

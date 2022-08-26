@@ -39,10 +39,8 @@ namespace API
 
             services.AddDatabaseServices(_config);
             services.AddApplicationServices(_config);
-            services.AddRabbitMQServices(_config);
-            
+            services.AddRabbitMQServices(_config); 
             services.AddControllers();
-            
             services.AddSwaggerService(_config);
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
                             builder
@@ -52,7 +50,6 @@ namespace API
                         }));
             
             services.AddIdentityService(_config);
-        
         }
 
     
@@ -77,7 +74,6 @@ namespace API
                 endpoints.MapHub<PresenceHub>("hubs/presence");
                 endpoints.MapHub<MessageHub>("hubs/message");
             });
-
 
             lifetime.ApplicationStarted.Register(() => RegisterSignalRWithRabbitMQ(app.ApplicationServices));
 

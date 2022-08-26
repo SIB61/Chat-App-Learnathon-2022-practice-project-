@@ -1,37 +1,57 @@
 <div class="container">
-    <div class="recieverusername">
-        {{recieverUsername}}
-    </div>
-   
-    <div class="scrolling" #scrollMe [scrollTop]="scrollMe.scrollHeight" >
+  <mat-toolbar class="mat-elevation-z8">
+    <mat-toolbar-row>
+      <span *ngIf="!isLarge"
+        ><button mat-icon-button (click)="sharedService.setOpen(!isOpen)">
+          <mat-icon>{{ isOpen ? "arrow_back" : "menu" }}</mat-icon>
+        </button>
+      </span>
+      <span
+        class="h-full aspect-square flex justify-center items-center bg-my_primary mx-3 text-white"
+        >{{ recieverUsername.charAt(0).toUpperCase() }}</span
+      >
+      {{ recieverUsername }}
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div
+    class="scrolling"
+    cdkScrollable
+    #scrollMe
+    [scrollTop]="scrollMe.scrollHeight"
+  >
+    <div *ngFor="let message of messages">
+      <div class="sms-content">
+        <div class="my_message">
+          <span *ngIf="message.recipientId !== recipientId" class="bg-blue-300">
+            {{ message.content }}
 
-        <div *ngFor="let message of (messageService.messageThread$ | async)">
-            <div  class="sms-content">
-                <div  class="my_message">
-                    <span *ngIf="message.recipientId !== recieverId">
-                        {{message.content}} 
-                         
-                        <span style="font-weight: 100; font-size: 15px;"> {{message.messageSent | date}}</span>
-                       
-                    </span>
-                </div>
-                <div class="frd_message">
-                    <span  *ngIf="message.recipientId == recieverId">
-                        {{message.content}}
-                        <span style="font-weight: 100; font-size: 15px;"> {{message.messageSent | date}}</span>
-                    </span>
-                </div>
-                
-            </div>
+            <span style="font-weight: 100; font-size: 10px">
+              {{ message.messageSent | date }}</span
+            >
+          </span>
         </div>
+        <div class="frd_message">
+          <span *ngIf="message.recipientId == recipientId" class="bg-blue-100">
+            {{ message.content }}
+            <span style="font-weight: 100; font-size: 10px">
+              {{ message.messageSent | date }}</span
+            >
+          </span>
+        </div>
+      </div>
     </div>
-    <div class="chat-box">
-        <form  [formGroup] ="sendNewSMS" (ngSubmit)="sendSMS()" >
-            <input 
-                formControlName="content"
-                placeholder="Type your sms">
-            <button type="submit" class="btn btn-primary"> Send</button>
-        </form>
-    </div>
+  </div>
+  <mat-toolbar class="mat-elevation-z8">
+    <mat-toolbar-row class="flex">
+      <form [formGroup]="form" (ngSubmit)="sendSMS()">
+        <input
+          matInput
+          formControlName="content"
+          placeholder="Type your sms"
+          autocomplete="off"
+        />
+        <button mat-flat-button color="primary" type="submit">send</button>
+      </form>
+    </mat-toolbar-row>
+  </mat-toolbar>
 </div>
-

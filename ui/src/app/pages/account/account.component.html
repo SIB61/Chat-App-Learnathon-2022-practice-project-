@@ -1,8 +1,26 @@
-<div class="py-16 flex h-full justify-center items-center">
-  <div @slideInFromT @fadeIn class="hover:shadow-2xl shadow-md">
-    <router-outlet></router-outlet>
+<!-- <div class="hero"></div> -->
+<!-- <div class="py-16 flex h-screen justify-center items-center"> -->
+<!--   <div @slideInFromT @fadeIn class="shadow-md lg:w-80"> -->
+<!--     <router-outlet></router-outlet> -->
+<!--   </div> -->
+<!--   <!-- <div @slideInFromL @fadeIn> -->
+<!--     <img src="assets/login.svg" alt="Welcome" style="height: 60vh" /> -->
+<!--   </div> -->
+<!-- </div> -->
+<!-- <div></div> -->
+
+<div class="flex flex-col lg:flex-row md:flex-row">
+  <div
+    class="w-100w lg:w-50w md:w-50w h-30v lg:h-100v md:h-100v bg-my_primary mat-elevation-z8 flex flex-col justify-center items-center"
+  >
+    <p class="font-semibold text-white text-xl">Welcome To</p>
+    <p class="font-bold text-white text-4xl">MESSENGER</p>
   </div>
-  <!-- <div @slideInFromL @fadeIn>
-    <img src="assets/login.svg" alt="Welcome" style="height: 60vh" />
-  </div> -->
+  <div
+    class="w-100w lg:w-50w md:w-50w h-70v lg:h-100v md:h-100v flex justify-center items-center"
+  >
+    <div class="w-80">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

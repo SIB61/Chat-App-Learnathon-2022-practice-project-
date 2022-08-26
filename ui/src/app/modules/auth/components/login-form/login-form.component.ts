@@ -34,6 +34,7 @@ export class LoginFormComponent implements OnInit {
     username: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
+
   ngOnInit(): void {}
 
   visibile: boolean = false;
@@ -55,7 +56,12 @@ export class LoginFormComponent implements OnInit {
           key: 'refresh_token',
           value: value.data.refreshToken,
         });
+        this.storage.save({
+          key:'username',
+          value:value.data.userName
+        })
         this.storage.save({ key: 'user_id', value: value.data.id });
+        this.storage.save({key:'expired_time', value: value.data.expiredTime.toString()})
         this.router.navigateByUrl('home');
         console.warn(value);
         console.warn(':jksdfhk');
