@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wOUQIP3IhmU6qpCAiSbUMrNXQcaRfueZMJEhg/fQ+K7bkaZr46E1xtoIOcqydFCstRSHBpDYD+PyyfOJpqTNpw==",
+  "dgSpecHash": "ruOn0WDwlcftjNiMZoQ0PlljX5G7iC3iQI+B35odOjC2c5ifr1yO0wYevOZGyt3ugHKjoPxUlHsabs+0F2l3Ng==",
   "success": true,
-  "projectFilePath": "/home/sabit/WebProjects/learnathon-final-task/api/api.csproj",
+  "projectFilePath": "/home/sabit/WebProjects/AngularProjects/LearnathonChatApp/api/api.csproj",
   "expectedPackageFiles": [
     "/home/sabit/.nuget/packages/automapper/11.0.0/automapper.11.0.0.nupkg.sha512",
     "/home/sabit/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/11.0.0/automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

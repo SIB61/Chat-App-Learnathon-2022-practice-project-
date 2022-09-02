@@ -3487,11 +3487,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/sabit/WebProjects/learnathon-final-task/api/api.csproj",
+      "projectUniqueName": "/home/sabit/WebProjects/AngularProjects/LearnathonChatApp/api/api.csproj",
       "projectName": "api",
-      "projectPath": "/home/sabit/WebProjects/learnathon-final-task/api/api.csproj",
+      "projectPath": "/home/sabit/WebProjects/AngularProjects/LearnathonChatApp/api/api.csproj",
       "packagesPath": "/home/sabit/.nuget/packages/",
-      "outputPath": "/home/sabit/WebProjects/learnathon-final-task/api/obj/",
+      "outputPath": "/home/sabit/WebProjects/AngularProjects/LearnathonChatApp/api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/sabit/.nuget/NuGet/NuGet.Config"
@@ -3581,7 +3581,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
       }
     }
   }

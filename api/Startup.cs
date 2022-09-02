@@ -60,6 +60,7 @@ namespace API
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseHttpsRedirection();
             }
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
