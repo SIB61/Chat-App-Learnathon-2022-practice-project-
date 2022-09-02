@@ -55,6 +55,11 @@
           formControlName="password"
           autocomplete="false"
         />
+        <button mat-icon-button type="button" matSuffix (click)=" hidden = !hidden"><mat-icon>
+          {{
+           hidden? "visibility_off":"visibility" 
+          }}
+        </mat-icon></button>
         <mat-error *ngIf="regFormGroup.get('password')?.invalid">{{
           getErrorMsg(regFormGroup.get("password"))
         }}</mat-error>
@@ -68,6 +73,11 @@
           formControlName="repeatedPassword"
           autocomplete="false"
         />
+        <button mat-icon-button type="button" matSuffix (click)="rHidden = !rHidden"><mat-icon>
+          {{
+           rHidden? "visibility_off":"visibility" 
+          }}
+        </mat-icon></button>
         <mat-error *ngIf="regFormGroup.get('repeatedPassword')?.invalid">{{
           getErrorMsg(regFormGroup.get("repeatedPassword"))
         }}</mat-error>

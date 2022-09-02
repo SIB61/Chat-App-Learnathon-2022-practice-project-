@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IsUserGuard } from '@common/guards/is-user.guard';
 import { AbstractLocalStorageService } from '@common/services/storage/abs/abs-local-storage';
@@ -24,7 +24,7 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginFormComponent implements OnInit {
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private loginService: AbsLoginService,
     private storage: AbstractLocalStorageService
@@ -37,18 +37,15 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  visibile: boolean = false;
+  hidden: boolean = false;
 
   goToRegistration() {
     this.router.navigateByUrl('account/register');
   }
 
-  toggleVisibility() {
-    this.visibile = !this.visibile;
-  }
+  
 
   submit(data: { username: string; password: string }) {
-    alert(data.username + data.password);
     this.loginService.login(data.username, data.password).subscribe({
       next: (value: LoginResponseDto) => {
         this.storage.save({ key: 'access_token', value: value.data.token });

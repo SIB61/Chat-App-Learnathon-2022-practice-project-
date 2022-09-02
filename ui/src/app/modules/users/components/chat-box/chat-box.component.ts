@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { message } from '@common/models/message';
 import { sendmessage } from '@common/models/sendmessage';
@@ -20,17 +20,17 @@ import { distinctUntilChanged, take, Subject } from 'rxjs';
   styleUrls: ['./chat-box.component.scss'],
 })
 export class ChatBoxComponent implements OnInit, OnDestroy {
-  recipientId: string = "T";
-  recieverUsername: string;
+  recipientId: string;
+  recieverUsername: string = "MESSENGER";
   messages: message[];
   sendmessage: sendmessage;
-  form: FormGroup;
+  form: UntypedFormGroup;
   scrolltop: number;
   isOpen: boolean;
   isLarge: boolean;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private activeRoute: ActivatedRoute,
     public messageService: MessageService,

@@ -2,8 +2,8 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -34,7 +34,7 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
     private authService: AbsRegistratoinService,
     private snackbar: MatSnackBar,
     private loaderService: LoaderService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router
   ) {}
   subscription: Subscription;
@@ -43,7 +43,7 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
   invalidUserName: boolean;
   invalidEmail: boolean;
   showProgres: boolean;
-  regFormGroup: FormGroup = this.formBuilder.group({
+  regFormGroup: UntypedFormGroup = this.formBuilder.group({
     username: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     birthDate: ['', [Validators.required, validAge]],
@@ -110,9 +110,10 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
             this.showProgres = false;
             this.loaderService.setLoading(false);
             this.snackbar.open('Registered Successfully', 'ok');
-            localStorage.setItem('access_token', value.token);
-            localStorage.setItem('refresh_token', value.refreshToken);
-            localStorage.setItem('username', value.username);
+            localStorage.setItem('access_token', value.data.token);
+            localStorage.setItem('refresh_token', value.data.refreshToken);
+            localStorage.setItem('username', value.data.username);
+            localStorage.setItem('expired_time',value.data.expiredTime);
             this.router.navigateByUrl('/home');
           }
         },
