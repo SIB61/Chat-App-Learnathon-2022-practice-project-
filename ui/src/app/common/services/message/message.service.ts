@@ -51,9 +51,16 @@ export class MessageService {
 
     this.hubConnection.start().catch((erorr) => console.log(erorr));
 
-    this.hubConnection.on('NewMessage', (message) => {
+    this.hubConnection.on('NewMessage', (message: message) => {
       this.messageThreadSource.pipe(take(1)).subscribe((messages) => {
-        this.messageThreadSource.next([...messages, message]);
+        let msgs = messages;
+        if (message.recipientId != this.userId)
+          msgs = msgs.map((msg: message) => {
+            if (msg.content == message.content) return message;
+            else return msg;
+          });
+        else msgs.push(message);
+        this.messageThreadSource.next(msgs);
         this.checkNew = true;
       });
     });

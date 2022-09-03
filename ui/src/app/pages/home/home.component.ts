@@ -1,6 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { UpdateUserDialogueComponent } from '@common/components/update-user-dialogue/update-user-dialogue.component';
 import { ApiEndpoints } from '@common/enums/api-endpoints.enum';
 import { HttpRequestTypes } from '@common/enums/http-request-types.enum';
 import { AbsApiService } from '@common/services/http/abs/abs-api.service';
@@ -21,7 +24,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private api: AbsApiService,
     private storage: LocalStorageService,
     private $breakPoint: BreakpointObserver,
-    public shared: SharedFriendService
+    public shared: SharedFriendService,
+    private router: Router,
+    private dialog: MatDialog
   ) {}
   isOpened: boolean;
   isLarge: boolean;
@@ -69,5 +74,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.isLarge = val;
     });
   }
-  tooglePage(event: any) {}
+
+  logout(): void {
+    localStorage.clear();
+    this.router.navigateByUrl('/account/login');
+  }
+
+  updateUser() {
+    this.dialog.open(UpdateUserDialogueComponent, { data: {} });
+  }
 }

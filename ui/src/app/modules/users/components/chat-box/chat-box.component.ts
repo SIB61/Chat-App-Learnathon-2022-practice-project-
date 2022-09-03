@@ -5,7 +5,11 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { message } from '@common/models/message';
 import { sendmessage } from '@common/models/sendmessage';
@@ -21,7 +25,7 @@ import { distinctUntilChanged, take, Subject } from 'rxjs';
 })
 export class ChatBoxComponent implements OnInit, OnDestroy {
   recipientId: string;
-  recieverUsername: string = "MESSENGER";
+  recieverUsername: string = 'MESSENGER';
   messages: message[];
   sendmessage: sendmessage;
   form: UntypedFormGroup;
@@ -31,8 +35,6 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: UntypedFormBuilder,
-    private router: Router,
-    private activeRoute: ActivatedRoute,
     public messageService: MessageService,
     public sharedService: SharedFriendService
   ) {}
@@ -84,12 +86,16 @@ export class ChatBoxComponent implements OnInit, OnDestroy {
     });
   }
 
-  async sendSMS() {
+  sendSMS() {
     const content = this.form.get('content')?.value;
 
-    const value = { content: content, recipientId: this.recipientId };
-    const message = await this.messageService.sendMessage(value);
+    const value = {
+      content: content,
+      recipientId: this.recipientId,
+    } as message;
+    this.messages.push(value);
+    this.messages = this.messages;
     this.form.reset();
-    this.messages = [message, ...this.messages];
+    this.messageService.sendMessage(value);
   }
 }

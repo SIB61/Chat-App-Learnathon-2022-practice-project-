@@ -16,6 +16,17 @@
             {{ myUsername?.charAt(0)?.toUpperCase() }}
           </span>
           {{ myUsername }}
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>create</mat-icon>edit profile
+            </button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>logout</mat-icon>logout
+            </button>
+          </mat-menu>
         </mat-toolbar-row>
       </mat-toolbar>
       <div class="h-full mt-16 scrolling">

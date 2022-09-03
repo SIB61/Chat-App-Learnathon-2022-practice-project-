@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -16,9 +17,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatMenuModule} from '@angular/material/menu'; 
 const matModules: any[] = [
   MatFormFieldModule,
   MatPaginatorModule,
+  MatMenuModule,
   MatToolbarModule,
   MatTableModule,
   MatButtonModule,
