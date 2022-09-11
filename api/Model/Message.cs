@@ -17,4 +17,5 @@ namespace api.Model
         public DateTime? DateRead {get; set;}
         public DateTime MessageSent {get; set;} 
     }
+
 }
