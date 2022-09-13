@@ -6,11 +6,14 @@ import { Router } from '@angular/router';
 import { UpdateUserDialogueComponent } from '@common/components/update-user-dialogue/update-user-dialogue.component';
 import { ApiEndpoints } from '@common/enums/api-endpoints.enum';
 import { HttpRequestTypes } from '@common/enums/http-request-types.enum';
+import { GetUserModel } from '@common/models/get-user.model';
 import { AbsApiService } from '@common/services/http/abs/abs-api.service';
 import { ApiService } from '@common/services/http/api.service';
+import { ResponsiveService } from '@common/services/shared/responsive.service';
 import { LocalStorageService } from '@common/services/storage/local-storage.service';
 import { faAlipay } from '@fortawesome/free-brands-svg-icons';
 import { SharedFriendService } from '@modules/users/services/shared_friend.service';
+import { UserApiService } from '@modules/users/services/user-api.service';
 import { interval, observable, Observable, timeout, timer } from 'rxjs';
 
 @Component({
@@ -23,55 +26,41 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(
     private api: AbsApiService,
     private storage: LocalStorageService,
-    private $breakPoint: BreakpointObserver,
-    public shared: SharedFriendService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private service: UserApiService,
+    private responsiveService: ResponsiveService
   ) {}
-  isOpened: boolean;
-  isLarge: boolean;
-  receiverUser: string = 'username';
+  isOpened: boolean = true;
+  isSmall: boolean = true;
+  receiverUsername: string = 'username';
+  receiverId: string = '';
   myUsername = localStorage.getItem('username');
+  user: GetUserModel;
 
   ngAfterViewInit(): void {
     this.api.updateOnline();
-    this.$breakPoint
-      .observe([
-        Breakpoints.Large,
-        Breakpoints.Medium,
-        Breakpoints.Small,
-        '(min-width: 500px)',
-      ])
-      .subscribe({
-        next: (value) => {
-          if (
-            this.$breakPoint.isMatched(Breakpoints.Small) ||
-            this.$breakPoint.isMatched(Breakpoints.Handset) ||
-            this.$breakPoint.isMatched(Breakpoints.XSmall)
-          ) {
-            this.shared.setOpen(false);
-            this.shared.setLarge(false);
-          } else {
-            this.shared.setOpen(true);
-            this.shared.setLarge(true);
-          }
-        },
-      });
   }
 
   ngOnInit(): void {
-    this.shared.$reciever.subscribe({
-      next: (value) => {
-        this.receiverUser = value.username;
-      },
-    });
-    this.shared.$isOpen.subscribe({
+    this.service
+      .getUser(this.storage.get(LocalStorageService.USER_ID)!)
+      .subscribe({
+        next: (value) => {
+          this.user = value;
+          console.log(value);
+        },
+      });
+
+    this.responsiveService.$isOpen.subscribe({
       next: (val) => {
         this.isOpened = val;
       },
     });
-    this.shared.$isLarge.subscribe((val) => {
-      this.isLarge = val;
+    this.responsiveService.$size.subscribe({
+      next: (val) => {
+        this.isSmall = val == 's';
+      },
     });
   }
 
@@ -81,6 +70,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   updateUser() {
-    this.dialog.open(UpdateUserDialogueComponent, { data: {} });
+    this.dialog
+      .open(UpdateUserDialogueComponent, { data: this.user })
+      .afterClosed()
+      .subscribe({
+        next: (value: GetUserModel) => {
+          console.warn(value);
+          this.service.updateUser(value).subscribe({
+            next: (val) => console.warn(val),
+          });
+        },
+      });
+  }
+
+  changeReceiver(data: any) {
+    this.receiverUsername = data.username;
+    this.receiverId = data.id;
   }
 }

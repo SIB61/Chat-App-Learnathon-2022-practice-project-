@@ -1,0 +1,20 @@
+<mat-toolbar class="mat-elevation-z1 w-full">
+  <mat-toolbar-row class="flex">
+    <form [formGroup]="form" (ngSubmit)="emitMessage()">
+      <input
+        matInput
+        formControlName="message"
+        placeholder="Type your sms"
+        autocomplete="off"
+      />
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="disabled"
+        type="submit"
+      >
+        send
+      </button>
+    </form>
+  </mat-toolbar-row>
+</mat-toolbar>

@@ -1,0 +1,23 @@
+<mat-toolbar
+  color="primary"
+  class="mat-elevation-z1 fixed w-full z-50"
+  [style.width]="isSmall ? '85vw' : '25vw'"
+>
+  <mat-toolbar-row>
+    <span class="profile-icon">
+      {{ username?.charAt(0)?.toUpperCase() }}
+    </span>
+    {{ username }}
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="updateUser()">
+        <mat-icon>create</mat-icon>edit profile
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>logout
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>

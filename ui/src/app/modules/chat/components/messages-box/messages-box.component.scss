@@ -1,0 +1,23 @@
+.sms-content {
+  width: 100%;
+  padding: 20px;
+  font-size: 20px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.sms-content span {
+  //background-color: bisque;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.my_message {
+  display: flex;
+  justify-content: start;
+}
+
+.frd_message {
+  display: flex;
+  justify-content: end;
+}

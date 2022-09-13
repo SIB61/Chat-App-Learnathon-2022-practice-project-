@@ -1,0 +1,11 @@
+<div class="container">
+  <app-chat-titlebar [username]="receiverUsername"></app-chat-titlebar>
+  <div #messagesBox [scrollTop]="messagesBox.scrollHeight" class="messages-box">
+    <app-messages-box [messages]="messages"></app-messages-box>
+  </div>
+  <app-chat-box
+    (send)="sendMessage($event)"
+    [disabled]="receiverId == ''"
+    class="mat-elevation-z3"
+  ></app-chat-box>
+</div>

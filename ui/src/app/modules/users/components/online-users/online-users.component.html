@@ -74,7 +74,12 @@
   cdk-scrollable
   (selectionChange)="changeFriend(frnds.selectedOptions.selected[0].value)"
 >
-  <mat-list-option *ngFor="let user of users" class="text-white" [value]="user">
+  <mat-list-option
+    *ngFor="let user of users"
+    class="text-white"
+    [value]="user"
+    (click)="closeDrawer()"
+  >
     <div mat-list-avatar>
       <mat-icon mat-list-icon class="accent">person</mat-icon>
     </div>

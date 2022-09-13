@@ -8,10 +8,9 @@ import { DirectivesModule } from 'src/app/common/directives/directives.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OnlineUsersComponent } from './components/online-users/online-users.component';
-import { ChatBoxComponent } from './components/chat-box/chat-box.component';
 import { SharedFriendService } from './services/shared_friend.service';
 @NgModule({
-  declarations: [UserTableComponent, OnlineUsersComponent, ChatBoxComponent],
+  declarations: [UserTableComponent, OnlineUsersComponent],
   imports: [
     ReactiveFormsModule,
     FontAwesomeModule,
@@ -20,7 +19,7 @@ import { SharedFriendService } from './services/shared_friend.service';
     UsersRoutingModule,
     MateialModule,
   ],
-  exports: [ChatBoxComponent, OnlineUsersComponent],
+  exports: [OnlineUsersComponent],
   providers: [SharedFriendService],
 })
 export class UsersModule {}

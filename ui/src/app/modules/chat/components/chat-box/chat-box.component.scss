@@ -1,0 +1,25 @@
+mat-toolbar {
+  height: max-content;
+  min-width: 100%;
+  mat-toolbar-row {
+    width: 100%;
+    form {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      input {
+        background-color: transparent;
+        border: none;
+        border-radius: 10px;
+        margin-right: 8px;
+        padding: 6px;
+        width: 100%;
+        box-sizing: border-box;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}

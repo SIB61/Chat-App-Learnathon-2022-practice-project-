@@ -17,7 +17,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {MatMenuModule} from '@angular/material/menu'; 
+import { MatMenuModule } from '@angular/material/menu';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 const matModules: any[] = [
   MatFormFieldModule,
   MatPaginatorModule,
@@ -28,6 +29,7 @@ const matModules: any[] = [
   MatDialogModule,
   MatInputModule,
   MatListModule,
+  ScrollingModule,
   MatSidenavModule,
   MatCardModule,
   MatButtonToggleModule,

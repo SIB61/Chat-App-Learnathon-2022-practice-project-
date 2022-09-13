@@ -1,0 +1,21 @@
+<div *ngFor="let message of messages">
+  <div class="sms-content">
+    <div class="my_message">
+      <span *ngIf="message.recipientId == userId" class="bg-blue-100">
+        {{ message.content }}
+
+        <span style="font-weight: 100; font-size: 10px">
+          {{ message.messageSent | date }}</span
+        >
+      </span>
+    </div>
+    <div class="frd_message">
+      <span *ngIf="message.recipientId != userId" class="bg-blue-400">
+        {{ message.content }}
+        <span style="font-weight: 100; font-size: 10px">
+          {{ message.messageSent | date }}</span
+        >
+      </span>
+    </div>
+  </div>
+</div>

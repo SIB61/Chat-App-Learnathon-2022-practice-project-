@@ -1,0 +1,14 @@
+<mat-toolbar class="mat-elevation-z1">
+  <mat-toolbar-row>
+    <span *ngIf="isSmall"
+      ><button mat-icon-button (click)="toggleOpen()">
+        <mat-icon>{{ isOpen ? "arrow_back" : "menu" }}</mat-icon>
+      </button>
+    </span>
+    <span
+      class="h-full mx-3 aspect-square flex justify-center items-center bg-my_primary text-white"
+      >{{ username.charAt(0).toUpperCase() }}</span
+    >
+    {{ username }}
+  </mat-toolbar-row>
+</mat-toolbar>

@@ -24,6 +24,19 @@ export class UserApiService {
     });
   }
 
+  getUser(userId: string) {
+    return this.api.requestApi(
+      ApiEndpoints.USERS + '/' + userId,
+      HttpRequestTypes.GET,
+      {
+        headers: new HttpHeaders().append(
+          'Authorization',
+          `Bearer ${this.storage.get('access_token')}`
+        ),
+      }
+    );
+  }
+
   getOnlineUser() {
     return this.api.requestApi('Online/users', HttpRequestTypes.GET, {
       headers: new HttpHeaders().append(

@@ -10,6 +10,8 @@ import { AppBarModule } from '@core/components/app-bar/app-bar.module';
 import { Router } from '@angular/router';
 import { UsersModule } from '@modules/users/users.module';
 import { SharedFriendService } from '@modules/users/services/shared_friend.service';
+import { ProfileModule } from '@modules/profile/profile.module';
+import { ChatModule } from '@modules/chat/chat.module';
 @NgModule({
   declarations: [AccountComponent, WelcomeComponent, HomeComponent],
   imports: [
@@ -18,6 +20,8 @@ import { SharedFriendService } from '@modules/users/services/shared_friend.servi
     PagesRoutingModule,
     AppBarModule,
     UsersModule,
+    ProfileModule,
+    ChatModule,
   ],
   exports: [],
   providers: [SharedFriendService],

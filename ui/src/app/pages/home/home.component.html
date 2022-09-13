@@ -2,42 +2,22 @@
   <mat-drawer mode="side" [opened]="isOpened">
     <div
       class="w-30w h-screen primary flex flex-col justify-start"
-      [style.width]="isLarge ? '30vw' : '80vw'"
+      [style.width]="isSmall ? '85vw' : '25vw'"
     >
-      <mat-toolbar
-        color="primary"
-        class="mat-elevation-z8 fixed w-30w z-50"
-        [style.width]="isLarge ? '30vw' : '80vw'"
-      >
-        <mat-toolbar-row>
-          <span
-            class="accent h-full aspect-square flex justify-center items-center mr-4 text-black"
-          >
-            {{ myUsername?.charAt(0)?.toUpperCase() }}
-          </span>
-          {{ myUsername }}
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-              <mat-icon>create</mat-icon>edit profile
-            </button>
-            <button mat-menu-item (click)="logout()">
-              <mat-icon>logout</mat-icon>logout
-            </button>
-          </mat-menu>
-        </mat-toolbar-row>
-      </mat-toolbar>
+      <app-profile-toolbar></app-profile-toolbar>
       <div class="h-full mt-16 scrolling">
-        <app-online-users></app-online-users>
+        <app-online-users (select)="changeReceiver($event)"></app-online-users>
       </div>
     </div>
   </mat-drawer>
   <mat-drawer-content>
     <div class="h-full flex flex-col justify-start">
       <div class="w-full h-full">
-        <app-chat-box></app-chat-box>
+        <!-- <app-chat-box></app-chat-box> -->
+        <app-chat
+          [receiverUsername]="receiverUsername"
+          [receiverId]="receiverId"
+        ></app-chat>
       </div>
     </div>
   </mat-drawer-content>
